@@ -7,9 +7,9 @@
 export PATH=../Software/anaconda3/bin:$PATH
 
 # Only change these: #####################################################################
-export FQ_DIR1="../Elephant_project/novaseq/sf_arantes_wgs_ele758_hvmmmdsx2"
-export FQ_DIR2="../Elephant_project/novaseq/sf_arantes_wgs_ele758_hwgljdsx2"
-export OUT_DIR="../Elephant_project/novaseq/trimmed"
+export FQ_DIR1="../Elephant_project/ReSeq/genomic_data/novaseq/sf_arantes_wgs_ele758_hvmmmdsx2"
+export FQ_DIR2="../Elephant_project/ReSeq/genomic_data/novaseq/sf_arantes_wgs_ele758_hwgljdsx2"
+export OUT_DIR="../Elephant_project/ReSeq/genomic_data/novaseq/trimmed"
 ##########################################################################################
 mkdir -p $OUT_DIR
 
