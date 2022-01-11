@@ -1,0 +1,27 @@
+#!/bin/bash
+
+## Full installation ############################################
+##conda create -n RESEQ_env -c bioconda bwa-mem2 samtools picard
+#################################################################
+
+#SBATCH -J ReSeq_index
+
+#SBATCH --mail-type=ALL
+#SBATCH --mail-user=..@zedat.fu-berlin.de
+
+#SBATCH --partition=begendiv,main
+#SBATCH --qos=standard
+#SBATCH --cpus-per-task=2
+#SBATCH --mem=48G
+#SBATCH --time=24:00:00
+
+export PATH=~/Software/anaconda3/bin:$PATH
+source activate RESEQ_env
+
+echo ""
+echo ". Reference indexing..."
+echo ""
+
+cd ${OUT_DIR}/idx
+bwa-mem2 index -p $ASSEMBLY_NAME $ASSEMBLY
+samtools faidx $ASSEMBLY
