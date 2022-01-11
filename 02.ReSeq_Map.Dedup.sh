@@ -1,8 +1,8 @@
 # Only change these variables: #################################################################
-export OUT_DIR="/scratch/ddepanis/Elephant_project/ReSeq/pilot"
-export ASSEMBLY="/scratch/ddepanis/Elephant_project/mEleMax1/intermediates/bionano/l2/l2_s1.fa"
+export OUT_DIR="~/Elephant_project/ReSeq/pilot"
+export ASSEMBLY="~/Elephant_project/mEleMax1/intermediates/bionano/l2/l2_s1.fa"
 export ASSEMBLY_NAME=$(basename $ASSEMBLY .fa)
-export FQ_DIR="/scratch/ddepanis/Elephant_project/novaseq/trimmed"
+export FQ_DIR="~/Elephant_project/novaseq/trimmed"
 ################################################################################################
 
 
