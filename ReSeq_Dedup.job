@@ -1,0 +1,38 @@
+#!/bin/bash
+
+## Full installation ############################################
+##conda create -n RESEQ_env -c bioconda bwa-mem2 samtools picard
+#################################################################
+
+#SBATCH -J ReSeq_dedup
+
+#SBATCH --mail-type=ALL
+#SBATCH --mail-user=..@zedat.fu-berlin.de
+
+#SBATCH --partition=begendiv,main
+#SBATCH --qos=standard
+#SBATCH --cpus-per-task=24
+#SBATCH --mem=64G
+#SBATCH --time=5-00:00:00
+
+export PATH=~/Software/anaconda3/bin:$PATH
+source activate RESEQ_env
+
+export TMPDIR="~/tmp"
+
+
+echo ""
+echo ". Starting Picard..."
+echo ""
+
+BAM_IN=$(ls ${OUT_DIR}/bam_sort/*.bam | head -n $SLURM_ARRAY_TASK_ID | tail -n 1)
+BAM_NAME=$(basename $BAM_IN .bam)
+cd ${OUT_DIR}/bam_dedup
+picard -Xmx64g MarkDuplicates REMOVE_DUPLICATES=true ASSUME_SORTED=true VALIDATION_STRINGENCY=SILENT MAX_FILE_HANDLES_FOR_READ_ENDS_MAP=1000 INPUT=$BAM_IN OUTPUT=${BAM_NAME}.rmd.bam METRICS_FILE=${BAM_NAME}.rmd.bam.metrics TMP_DIR=/scratch/ddepanis/tmp
+
+echo ""
+echo ". Indexing bam..."
+echo ""
+
+samtools index ${BAM_NAME}.rmd.bam
+
