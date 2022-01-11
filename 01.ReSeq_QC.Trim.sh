@@ -1,4 +1,6 @@
-#echo "=== STEP 1/3: FastQC    ======="
+echo ""
+echo "=== STEP 1/3: FastQC ======================================"
+echo ""
 
 #mkdir -p
 #FASTQC_JOB=
