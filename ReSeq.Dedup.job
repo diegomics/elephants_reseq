@@ -36,3 +36,18 @@ echo ""
 
 samtools index ${BAM_NAME}.rmd.bam
 
+echo ""
+echo ". Analyzing reference coverage..."
+echo ""
+
+samtools coverage ${BAM_NAME}.rmd.bam
+
+echo ""
+echo ". Calculating mean coverage..."
+echo ""
+
+REF_LENGTH=$(samtools view -H ${BAM_NAME}.rmd.bam | awk -vFS=: '/^@SQ/ {sum+=$3} END {print sum}')
+SEQ_DEPTH=$(samtools depth ${BAM_NAME}.rmd.bam | awk '{sum+=$3} END {print sum}')
+COVERAGE=$(echo "$SEQ_DEPTH/$REF_LENGTH" | bc -l)
+echo "The mean coverage of sample ${BAM_NAME}.rmd is ${COVERAGE}x."
+
