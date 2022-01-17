@@ -22,6 +22,6 @@ echo ""
 echo ". Reference indexing..."
 echo ""
 
-cd ${OUT_DIR}/idx
+cd ${OUT_DIR}/0_idx
 bwa-mem2 index -p $ASSEMBLY_NAME $ASSEMBLY
 samtools faidx $ASSEMBLY
