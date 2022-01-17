@@ -1,7 +1,7 @@
 # elephants_reseq
 :elephant: :elephant: :elephant: :elephant: :elephant: :elephant: :elephant: :elephant: :elephant: :elephant:
 
-#### Pipeline for analysis related to the whole-genome resequencing of 60+ timber Asian elephants from Myanmar
+#### Pipeline for analysis related to the whole-genome resequencing of 60+ [timber Asian elephants from Myanmar](https://elephant-project.science)
 
 ## Requirements:
 * [Slurm](https://slurm.schedmd.com)
