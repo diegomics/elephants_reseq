@@ -16,15 +16,15 @@ bash install_dependencies.sh
 ```
 ## Runnning the pipline:
 * Edit `variables.cnf` file with the respective paths, values and parameters.
-1) Run QC and preprocessing
+1) Run QC and filtering on Illumina NovaSeq paired-end _fastq_ files
 ```bash
 bash 01.ReSeq_QC.Trim.sh
 ```
-2) bla
+2) Index, map and deduplicate samples reads against a reference.
 ```bash
 bash ReSeq_Map.Dedup.sh 
 ```
-3) bla
+3) Call variants of the sampes, merge and filter 
 ```bash
 bash ReSeq_VarCall.sh
 ```
