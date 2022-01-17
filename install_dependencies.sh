@@ -1,1 +1,1 @@
-conda env create -f RESEQ_env.yml
+conda env create -f env.yml
