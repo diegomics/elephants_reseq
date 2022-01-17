@@ -1,5 +1,5 @@
 # Only change these variables: #################################################################
-export OUT_DIR="~/Elephant_project/ReSeq/pilot/vcf_deepvar"
+export OUT_DIR="~/Elephant_project/ReSeq/pilot/3_vcf_deepvar"
 export REF="~/Elephant_project/mEleMax1/intermediates/bionano/l2/l2_s1.fa"
 export BAM_DIR="~/Elephant_project/ReSeq/pilot/bam_dedup"
 ################################################################################################
