@@ -28,3 +28,4 @@ echo ""
 
 cd $OUT_DIR
 singularity run -B /scratch/ddepanis/:/scratch/ddepanis/ docker://google/deepvariant:"${BIN_VER}" /opt/deepvariant/bin/run_deepvariant --model_type=WGS --ref="${REF}" --reads="${BAM_DIR}"/21Nov94-DL001_S12_L002.rmd.bam --output_vcf="${OUT_DIR}"/21Nov94-DL001_S12_L002.vcf.gz --output_gvcf="${OUT_DIR}"/21Nov94-DL001_S12_L002.g.vcf.gz --intermediate_results_dir "${OUT_DIR}/tmp_dir" --num_shards=24
+
