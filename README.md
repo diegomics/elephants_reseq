@@ -20,11 +20,11 @@ bash install_dependencies.sh
 ```bash
 bash 01.ReSeq_QC.Trim.sh
 ```
-2) Index, map and deduplicate samples reads against a reference.
+2) Index, map and deduplicate samples reads against a reference
 ```bash
-bash ReSeq_Map.Dedup.sh 
+bash 02.ReSeq_Map.Dedup.sh 
 ```
 3) Call variants of the sampes, merge and filter 
 ```bash
-bash ReSeq_VarCall.sh
+bash 03.ReSeq_VarCall.sh
 ```
