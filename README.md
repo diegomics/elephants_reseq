@@ -1,9 +1,7 @@
 # elephants_reseq
-:elephant: :elephant: :elephant: :elephant: :elephant: :elephant: :elephant: :elephant: :elephant: :elephant: :elephant: :elephant: :elephant: :elephant: :elephant: :elephant: :elephant: :elephant: :elephant: :elephant: :elephant: :elephant: :elephant: :elephant: :elephant: :elephant: :elephant: :elephant: :elephant: :elephant:
-:elephant: :elephant: :elephant: :elephant: :elephant: :elephant: :elephant: :elephant: :elephant: :elephant: :elephant: :elephant: :elephant: :elephant: :elephant: :elephant: :elephant: :elephant: :elephant: :elephant: :elephant: :elephant: :elephant: :elephant: :elephant: :elephant: :elephant: :elephant: :elephant: :elephant:
-:elephant: :elephant: :elephant: :elephant: :elephant: :elephant: :elephant: :elephant:
+:elephant: :elephant: :elephant: :elephant: :elephant: :elephant: :elephant: :elephant: :elephant: :elephant:
 
-#### Pipeline for analysis related to the whole-genome resequencing of 68 [timber Asian elephants from Myanmar](https://elephant-project.science)
+#### Pipeline for the whole-genome resequencing analysis of 68 [timber Asian elephants from Myanmar](https://elephant-project.science)
 
 ## Requirements:
 * [Slurm](https://slurm.schedmd.com)
