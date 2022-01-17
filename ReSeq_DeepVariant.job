@@ -28,6 +28,7 @@ echo ""
 
 BAM_IN=$(ls $BAM_DIR/*.rmd.bam | head -n $SLURM_ARRAY_TASK_ID | tail -n 1)
 BAM_NAME=$(basename $BAM_IN .bam)
+mkdir -p ${OUT_DIR}/tmp_dir/${BAM_NAME}
 cd $OUT_DIR
-singularity run -B /scratch/ddepanis/:/scratch/ddepanis/ docker://google/deepvariant:"${BIN_VER}" /opt/deepvariant/bin/run_deepvariant --model_type=WGS --ref="${REF}" --reads="${BAM_IN}" --output_vcf="${OUT_DIR}"/"${BAM_NAME}".vcf.gz --output_gvcf="${OUT_DIR}"/"${BAM_NAME}".g.vcf.gz --intermediate_results_dir "${OUT_DIR}/tmp_dir" --num_shards=24
+singularity run -B /scratch/ddepanis/:/scratch/ddepanis/ docker://google/deepvariant:"${BIN_VER}" /opt/deepvariant/bin/run_deepvariant --model_type=WGS --ref="${REF}" --reads="${BAM_IN}" --output_vcf="${OUT_DIR}"/"${BAM_NAME}".vcf.gz --output_gvcf="${OUT_DIR}"/"${BAM_NAME}".g.vcf.gz --intermediate_results_dir "${OUT_DIR}/tmp_dir/"${BAM_NAME}" --num_shards=24
 
