@@ -17,7 +17,14 @@ bash install_dependencies.sh
 ## Runnning the pipline:
 * Edit `variables.cnf` file with the respective paths, values and parameters.
 1) Run QC and preprocessing
+```bash
 bash 01.ReSeq_QC.Trim.sh
+```
 2) bla
- 
+```bash
+bash ReSeq_Map.Dedup.sh 
+```
 3) bla
+```bash
+bash ReSeq_VarCall.sh
+```
