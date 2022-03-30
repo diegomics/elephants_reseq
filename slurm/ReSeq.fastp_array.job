@@ -6,7 +6,7 @@
 
 #SBATCH -J ReSeq_fastp
 
-#SBATCH --mail-type=ALL
+#SBATCH --mail-type=END,FAIL
 #SBATCH --mail-user=..@zedat.fu-berlin.de
 
 #SBATCH --partition=begendiv,main
@@ -15,11 +15,10 @@
 #SBATCH --mem=9G
 #SBATCH --time=12:00:00
 
-export PATH=~/Software/anaconda3/bin:$PATH
+export PATH="~/Software/anaconda3/bin:${PATH}"
 source activate FASTP_env
 
-READ_1=$(ls $FQ_DIR/*R1*.fastq.gz | head -n $SLURM_ARRAY_TASK_ID | tail -n 1)
-READ_NAME=$(basename $READ_1 _R1_001.fastq.gz)
+READ_1=$(ls ${FQ_DIR}/*R1* | head -n $SLURM_ARRAY_TASK_ID | tail -n 1)
+READ_NAME=$(basename $READ_1 _R1.fq.gz)
 
-cd $OUT_DIR
-fastp --in1 $READ_1 --in2 $FQ_DIR/${READ_NAME}_R2_001.fastq.gz --out1 $OUT_DIR/${READ_NAME}_R1.trimmed.fastq.gz --out2 $OUT_DIR/${READ_NAME}_R2.trimmed.fastq.gz -l 50 -h $OUT_DIR/${READ_NAME}.html -j $OUT_DIR/${READ_NAME}.fastp.json
+fastp --in1 $READ_1 --in2 $FQ_DIR/${READ_NAME}_R2.fq.gz --out1 "${TRIM_DIR}/${READ_NAME}_R1.trimmed.fq.gz" --out2 "${TRIM_DIR}/${READ_NAME}_R2.trimmed.fq.gz" -l 50 -h "${QC_DIR}/${READ_NAME}.html" -j "${QC_DIR}/${READ_NAME}.fastp.json"
