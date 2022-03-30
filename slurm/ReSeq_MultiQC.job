@@ -12,7 +12,7 @@
 #SBATCH --time=24:00:00
 
 export PATH="~/Software/anaconda3/bin:${PATH}"
-source activate QC_env
+source activate RESEQ_env
 
 srun \
 multiqc -i Elephant_ReSeq -o ${QC_DIR} ${QC_DIR}
