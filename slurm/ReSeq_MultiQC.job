@@ -1,0 +1,18 @@
+#!/bin/bash
+
+#SBATCH -J ReSeq_Multi
+
+#SBATCH --mail-type=END,FAIL
+#SBATCH --mail-user=..@zedat.fu-berlin.de
+
+#SBATCH --partition=begendiv,main
+#SBATCH --qos=standard
+#SBATCH --cpus-per-task=2
+#SBATCH --mem=4G
+#SBATCH --time=24:00:00
+
+export PATH="~/Software/anaconda3/bin:${PATH}"
+source activate QC_env
+
+srun \
+multiqc -i Elephant_ReSeq -o ${QC_DIR} ${QC_DIR}
