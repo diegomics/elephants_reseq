@@ -1,0 +1,43 @@
+#!/bin/bash
+
+## Full installation ############################################
+##conda create -n RESEQ_env -c bioconda bwa-mem2 samtools picard
+#################################################################
+
+#SBATCH -J ReSeq_map
+
+#SBATCH --mail-type=ALL
+#SBATCH --mail-user=..@zedat.fu-berlin.de
+
+#SBATCH --partition=begendiv,main
+#SBATCH --qos=standard
+#SBATCH --cpus-per-task=24
+#SBATCH --mem=64G
+#SBATCH --time=5-00:00:00
+
+export PATH=~/Software/anaconda3/bin:$PATH
+source activate RESEQ_env
+
+export TMPDIR="~/tmp"
+
+
+echo ""
+echo ". Starting bwa-mem2 & samtools..."
+echo ""
+
+READ=$(ls $FQ_DIR/*R1*.fastq.gz | head -n $SLURM_ARRAY_TASK_ID | tail -n 1)
+READ_NAME=$(basename $READ _R1.trimmed.fastq.gz)
+cd ${OUT_DIR}/1_bam_sort
+bwa-mem2 mem -t 12 -M ${OUT_DIR}/0_idx/${ASSEMBLY_NAME} $READ ${FQ_DIR}/${READ_NAME}_R2.trimmed.fastq.gz | samtools view -@ 6 -b -u | samtools sort -@ 6 -o ${OUT_DIR}/1_bam_sort/${READ_NAME}.bam
+
+echo ""
+echo ". Indexing bam..."
+echo ""
+
+samtools index ${READ_NAME}.bam
+
+echo ""
+echo ". Calculating mapping stats..."
+echo ""
+
+samtools flagstat ${READ_NAME}.bam
