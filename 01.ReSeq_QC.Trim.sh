@@ -24,4 +24,4 @@ FASTP_JOB_ID=$(echo $FASTP_JOB | cut -d ' ' -f4)
 
 echo "=== STEP 3/3: MultiQC ====================================="
 
-MULTI_JOB=$(sbatch --dependency=afterok:${FASTQC_JOB_ID}:${FASTP_JOB_ID} --output=${QC_DIR}/%x.%j.out --error=${QC_DIR}/%x.%j.err slurm/ReSeq_Multi.job)
+MULTI_JOB=$(sbatch --dependency=afterok:${FASTQC_JOB_ID}:${FASTP_JOB_ID} --output=${QC_DIR}/%x.%j.out --error=${QC_DIR}/%x.%j.err slurm/ReSeq_MultiQC.job)
