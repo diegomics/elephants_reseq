@@ -1,0 +1,21 @@
+#!/bin/bash
+
+#SBATCH -J ReSeq_FastQC
+
+#SBATCH --mail-type=END,FAIL
+#SBATCH --mail-user=..@zedat.fu-berlin.de
+
+#SBATCH --partition=begendiv,main
+#SBATCH --qos=standard
+#SBATCH --cpus-per-task=4
+#SBATCH --mem=16G
+#SBATCH --time=24:00:00
+
+export PATH="~/Software/anaconda3/bin:${PATH}"
+source activate QC_env
+
+
+READ=$(ls ${FQ_DIR}/*R1* | head -n $SLURM_ARRAY_TASK_ID | tail -n 1)
+
+srun \
+fastqc -t ${SLURM_CPUS_PER_TASK} -f fastq -o ${QC_DIR} $READ
