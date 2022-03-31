@@ -4,14 +4,9 @@ export QC_DIR="${FQ_DIR}/QC"
 export TRIM_DIR="${FQ_DIR}/trimmed"
 
 export OUT_DIR="~/Elephant_project/ReSeq/pilot"
-export ASSEMBLY="~/Elephant_project/mEleMax1/intermediates/bionano/l2/l2_s1.fa"
+export ASSEMBLY="/path/to/assembly.f"
 export ASSEMBLY_NAME=$(basename $ASSEMBLY ${ASSEMBLY##*.})
 export FQ_DIR="~/Elephant_project/novaseq/trimmed"
-
-export ASSEMBLY="/path/to/assembly.fasta"
-export HIC_FQ_1="/path/to/forward_reads"
-export HIC_FQ_2="/path/to/reverse_reads"
-export OUT_DIR="/path/to/arima_pipeline/out_dir"
 export TMPDIR="/path/to/tmp_dir"
 
 # slurm-specific variables
