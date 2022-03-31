@@ -7,10 +7,7 @@
 #SBATCH -J ReSeq_dedup
 
 #SBATCH --mail-type=ALL
-#SBATCH --mail-user=..@zedat.fu-berlin.de
 
-#SBATCH --partition=begendiv,main
-#SBATCH --qos=standard
 #SBATCH --cpus-per-task=24
 #SBATCH --mem=64G
 #SBATCH --time=5-00:00:00
