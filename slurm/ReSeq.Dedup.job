@@ -31,7 +31,7 @@ echo ""
 
 samtools coverage "${BAM_NAME}.rmd.bam"
 
-echo ""  ">> ${READ_NAME}.stats"
+echo ""  >> "${READ_NAME}.stats"
 echo ". Calculating mean coverage..."   >> "${READ_NAME}.stats"
 echo ""   >> "${READ_NAME}.stats"
 
