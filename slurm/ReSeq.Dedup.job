@@ -1,9 +1,5 @@
 #!/bin/bash
 
-## Full installation ############################################
-##conda create -n RESEQ_env -c bioconda bwa-mem2 samtools picard
-#################################################################
-
 #SBATCH -J ReSeq_dedup
 #SBATCH --mail-type=ALL
 #SBATCH --cpus-per-task=24
@@ -12,8 +8,6 @@
 
 export PATH="${CONDA_BIN_DIR}:${PATH}"
 source activate RESEQ_env
-
-export TMPDIR=$TMPDIR
 
 
 echo ""
