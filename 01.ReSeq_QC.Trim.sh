@@ -1,9 +1,3 @@
-# Only change and check these variables: #######################################################
-export FQ_DIR="~/Elephant_project/ReSeq/genomic_data/novaseq"
-export QC_DIR="${FQ_DIR}/QC"
-export TRIM_DIR="${FQ_DIR}/trimmed"
-################################################################################################
-
 source variables.cnf
 
 echo ""
