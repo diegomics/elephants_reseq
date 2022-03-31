@@ -1,9 +1,5 @@
 #!/bin/bash
 
-## Full installation ############################################
-##conda create -n RESEQ_env -c bioconda bowtie2 samtools picard
-#################################################################
-
 #SBATCH -J ReSeq_index
 
 #SBATCH --mail-type=ALL
