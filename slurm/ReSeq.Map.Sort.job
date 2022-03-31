@@ -1,9 +1,5 @@
 #!/bin/bash
 
-## Full installation ############################################
-##conda create -n RESEQ_env -c bioconda bwa-mem2 samtools picard
-#################################################################
-
 #SBATCH -J ReSeq_map
 
 #SBATCH --mail-type=ALL
