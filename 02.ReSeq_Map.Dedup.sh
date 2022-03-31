@@ -15,7 +15,7 @@ echo ""
 
 LENGTH=$(ls $FQ_DIR/*R1*.fastq.gz | wc -l)
 mkdir -p ${OUT_DIR}/1_bam_sort/logs
-MAP_JOB=$(sbatch --mail-user=${USER_MAIL} --partition=${PARTITION} --qos=${QUEUE} --dependency=afterok:$INDEX_JOB_ID --array=1-$LENGTH --output=${OUT_DIR}/1_bam_sort/logs/%x.%A_%a.out --error=${OUT_DIR}/1_bam_sort/logs/%x.%A_%a.err ReSeq_Map.Sort.job)
+MAP_JOB=$(sbatch --mail-user=${USER_MAIL} --partition=${PARTITION} --qos=${QUEUE} --dependency=afterok:$INDEX_JOB_ID --array=1-${LENGTH} --output=${OUT_DIR}/1_bam_sort/logs/%x.%A_%a.out --error=${OUT_DIR}/1_bam_sort/logs/%x.%A_%a.err ReSeq_Map.Sort.job)
 MAP_JOB_ID=$(echo $MAP_JOB | cut -d ' ' -f4)
 
 
@@ -25,5 +25,5 @@ echo ""
 
 LENGTH=$(ls ${OUT_DIR}/1_bam_sort/*.bam | wc -l)
 mkdir -p ${OUT_DIR}/2_bam_dedup/logs
-sbatch --mail-user=${USER_MAIL} --partition=${PARTITION} --qos=${QUEUE} --dependency=afterok:$INDEX_JOB_ID:$MAP_JOB_ID --output=${OUT_DIR}/2_bam_dedup/logs/%x.%A_%a.out --error=${OUT_DIR}/2_bam_dedup/logs/%x.%A_%a.err ReSeq_Dedup.job
+sbatch --mail-user=${USER_MAIL} --partition=${PARTITION} --qos=${QUEUE} --dependency=afterok:${INDEX_JOB_ID}:${MAP_JOB_ID} --output=${OUT_DIR}/2_bam_dedup/logs/%x.%A_%a.out --error=${OUT_DIR}/2_bam_dedup/logs/%x.%A_%a.err ReSeq_Dedup.job
                                                                                                                                                                                                         
