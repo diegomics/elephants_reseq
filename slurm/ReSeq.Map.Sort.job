@@ -37,6 +37,3 @@ echo ". Calculating mapping stats..." > ${READ_NAME}.stats
 echo ""  >> ${READ_NAME}.stats
 
 samtools flagstat ${READ_NAME}.bam >> ${READ_NAME}.stats
-
-echo ""  >> ${READ_NAME}.stats
-
