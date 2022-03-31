@@ -4,6 +4,7 @@ export QC_DIR="${FQ_DIR}/QC"
 export TRIM_DIR="${FQ_DIR}/trimmed"
 ################################################################################################
 
+source variables.cnf
 
 echo ""
 echo "=== STEP 1/3: FastQC ======================================"
