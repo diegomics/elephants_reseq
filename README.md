@@ -9,7 +9,7 @@
 * [Singularity](https://sylabs.io)
 * [Conda](https://docs.conda.io)
 
-The pipeline uses up to 24 CPUs and 64 GB of RAM
+The pipeline is configured to use 24 CPUs and 64 GB of RAM
 
 ## Installation:
 ```bash
