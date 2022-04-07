@@ -25,5 +25,8 @@ else
         echo "Invalid reference extension name!"
 fi
 
+srun \
 bowtie2-build --threads 2 ${ASSEMBLY} ${ASSEMBLY_NAME}
+
+srun \
 samtools faidx ${ASSEMBLY}
