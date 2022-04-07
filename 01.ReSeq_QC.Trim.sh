@@ -1,8 +1,5 @@
 source variables.cnf
 
-export QC_DIR="${OUT_DIR}/QC"
-export TRIM_DIR="${OUT_DIR}/trimmed"
-
 echo ""
 echo "=== STEP 1/3: FastQC ======================================"
 echo ""
