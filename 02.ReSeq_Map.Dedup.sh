@@ -13,7 +13,7 @@ echo ""
 echo "=== STEP 2/3: Mapping/Sorting ============================="
 echo ""
 
-LENGTH=$(ls ${TRIM_DIR}/*R1*.fastq.gz | wc -l)
+LENGTH=$(ls ${TRIM_DIR}/*R1*.fq.gz | wc -l)
 mkdir -p "${OUT_DIR}/1_bam_sort/logs"
 MAP_JOB=$(sbatch --dependency=afterok:${INDEX_JOB_ID} --mail-user=${USER_MAIL} --mail-type=${MAIL_TYPE} --partition=${PARTITION} --qos=${QUEUE} --array=1-${LENGTH} --output=${OUT_DIR}/1_bam_sort/logs/%x.%A_%a.out --error=${OUT_DIR}/1_bam_sort/logs/%x.%A_%a.err slurm/ReSeq_Map.Sort.job)
 MAP_JOB_ID=$(echo ${MAP_JOB} | cut -d ' ' -f4)
@@ -23,7 +23,7 @@ echo ""
 echo "=== STEP 3/3: Deduplication  =============================="
 echo ""
 
-LENGTH=$(ls ${TRIM_DIR}/*R1*.fastq.gz | wc -l)
+LENGTH=$(ls ${TRIM_DIR}/*R1*.fq.gz | wc -l)
 mkdir -p "${OUT_DIR}/2_bam_dedup/logs"
 sbatch --dependency=afterok:${INDEX_JOB_ID}:${MAP_JOB_ID} --mail-user=${USER_MAIL} --mail-type=${MAIL_TYPE} --partition=${PARTITION} --qos=${QUEUE} --output=${OUT_DIR}/2_bam_dedup/logs/%x.%A_%a.out --error=${OUT_DIR}/2_bam_dedup/logs/%x.%A_%a.err slurm/ReSeq_Dedup.job
                                                                                                                                                                                                         
