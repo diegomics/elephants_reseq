@@ -14,5 +14,16 @@ echo ". Reference indexing..."
 echo ""
 
 cd "${OUT_DIR}/0_idx"
+
+if [[ "${ASSEMBLY##*.}" == "gz" ]]
+then
+        gunzip -c ${ASSEMBLY} > "${ASSEMBLY_NAME}.fa"
+elif  [[ "${ASSEMBLY##*.}" == "fa" ]] || [[ "${ASSEMBLY##*.}" == "fasta" ]]
+then
+        ln -s ${ASSEMBLY} "${ASSEMBLY_NAME}.fa"
+else
+        echo "Invalid reference extension name!"
+fi
+
 bowtie2-build --threads 2 ${ASSEMBLY} ${ASSEMBLY_NAME}
 samtools faidx ${ASSEMBLY}
