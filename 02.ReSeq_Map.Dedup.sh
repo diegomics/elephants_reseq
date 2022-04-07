@@ -5,7 +5,7 @@ echo "=== STEP 1/3: Indexing ===================================="
 echo ""
 
 mkdir -p "${OUT_DIR}/0_idx/logs"
-INDEX_JOB=$(sbatch --mail-user=${USER_MAIL} --mail-type=${MAIL_TYPE} --partition=${PARTITION} --qos=${QUEUE} --output=${OUT_DIR}/0_idx/logs/%x.%j.out --error=${OUT_DIR}/0_idx/logs/%x.%j.err slurm/ReSeq.index.job)
+INDEX_JOB=$(sbatch --mail-user=${USER_MAIL} --mail-type=${MAIL_TYPE} --partition=${PARTITION} --qos=${QUEUE} --output=${OUT_DIR}/0_idx/logs/%x.%j.out --error=${OUT_DIR}/0_idx/logs/%x.%j.err slurm/ReSeq_index.job)
 INDEX_JOB_ID=$(echo ${INDEX_JOB} | cut -d ' ' -f4)
 
 
@@ -13,7 +13,7 @@ echo ""
 echo "=== STEP 2/3: Mapping/Sorting ============================="
 echo ""
 
-LENGTH=$(ls ${FQ_DIR}/*R1*.fastq.gz | wc -l)
+LENGTH=$(ls ${TRIM_DIR}/*R1*.fastq.gz | wc -l)
 mkdir -p "${OUT_DIR}/1_bam_sort/logs"
 MAP_JOB=$(sbatch --dependency=afterok:${INDEX_JOB_ID} --mail-user=${USER_MAIL} --mail-type=${MAIL_TYPE} --partition=${PARTITION} --qos=${QUEUE} --array=1-${LENGTH} --output=${OUT_DIR}/1_bam_sort/logs/%x.%A_%a.out --error=${OUT_DIR}/1_bam_sort/logs/%x.%A_%a.err slurm/ReSeq_Map.Sort.job)
 MAP_JOB_ID=$(echo ${MAP_JOB} | cut -d ' ' -f4)
