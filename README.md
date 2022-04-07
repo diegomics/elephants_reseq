@@ -23,7 +23,7 @@ bash install_dependencies.sh
 ```bash
 bash 01.ReSeq_QC.Trim.sh
 ```
-2) Index, map and deduplicate samples reads against a reference
+2) Index, map and deduplicate trimmed reads against a reference
 ```bash
 bash 02.ReSeq_Map.Dedup.sh 
 ```
