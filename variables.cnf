@@ -1,12 +1,12 @@
 # pipeline variables
 export FQ_DIR="~/Elephant_project/ReSeq/genomic_data/novaseq"
 export OUT_DIR="~/Elephant_project/ReSeq/pilot"
-export ASSEMBLY="/path/to/assembly.f"
+export ASSEMBLY="/path/to/assembly.some.extension"
+export ASSEMBLY_NAME=$(basename $ASSEMBLY .some.extension)
 export TMPDIR="/path/to/tmp_dir"
 #
 export QC_DIR="${OUT_DIR}/QC"
 export TRIM_DIR="${OUT_DIR}/trimmed"
-export ASSEMBLY_NAME=$(basename $ASSEMBLY ${ASSEMBLY##*.})
 
 
 # slurm-specific variables
@@ -14,6 +14,7 @@ export USER_MAIL='user@mail.de'
 export MAIL_TYPE='END,FAIL'
 export PARTITION='begendiv,main'
 export QUEUE="standard"
+
 
 # conda-specific variables
 export CONDA_BIN_DIR="/path/to/conda/bin"
