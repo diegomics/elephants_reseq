@@ -14,7 +14,6 @@ export USER_MAIL='user@mail.de'
 export MAIL_TYPE='END,FAIL'
 export PARTITION='begendiv,main'
 export QUEUE="standard"
-export MAX_CPU=
 
 # conda-specific variables
 export CONDA_BIN_DIR="/path/to/conda/bin"
