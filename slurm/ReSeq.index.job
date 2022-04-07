@@ -14,5 +14,5 @@ echo ". Reference indexing..."
 echo ""
 
 cd "${OUT_DIR}/0_idx"
-bowtie2-build --threads 2 $ASSEMBLY $ASSEMBLY_NAME
-samtools faidx $ASSEMBLY
+bowtie2-build --threads 2 ${ASSEMBLY} ${ASSEMBLY_NAME}
+samtools faidx ${ASSEMBLY}
