@@ -27,7 +27,7 @@ bash 01.ReSeq_QC.Trim.sh
 ```bash
 bash 02.ReSeq_Map.Dedup.sh 
 ```
-3) Call variants of the sampes, merge and filter 
+3) Call variants of the samples, merge and filter 
 ```bash
 bash 03.ReSeq_VarCall.sh
 ```
