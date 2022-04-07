@@ -9,6 +9,8 @@
 * [Singularity](https://sylabs.io)
 * [Conda](https://docs.conda.io)
 
+The pipeline uses up to 24 CPUs and 64 GB of RAM
+
 ## Installation:
 ```bash
 git clone https://github.com/diegomics/elephants_reseq
