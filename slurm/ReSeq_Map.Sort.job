@@ -2,8 +2,8 @@
 
 #SBATCH -J ReSeq_map
 
-#SBATCH --cpus-per-task=24
-#SBATCH --mem=64G
+#SBATCH --cpus-per-task=12
+#SBATCH --mem=24G
 #SBATCH --time=2-00:00:00
 
 export PATH="${CONDA_BIN_DIR}:${PATH}"
