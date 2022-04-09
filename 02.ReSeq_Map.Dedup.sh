@@ -25,5 +25,5 @@ echo ""
 
 LENGTH=$(ls ${TRIM_DIR}/*R1*.fq.gz | wc -l)
 mkdir -p "${OUT_DIR}/2_bam_dedup/logs"
-sbatch --dependency=afterok:${INDEX_JOB_ID}:${MAP_JOB_ID} --mail-user=${USER_MAIL} --mail-type=${MAIL_TYPE} --partition=${PARTITION} --qos=${QUEUE} --output=${OUT_DIR}/2_bam_dedup/logs/%x.%A_%a.out --error=${OUT_DIR}/2_bam_dedup/logs/%x.%A_%a.err slurm/ReSeq_Dedup.job
+sbatch --dependency=afterok:${INDEX_JOB_ID}:${MAP_JOB_ID} --mail-user=${USER_MAIL} --mail-type=${MAIL_TYPE} --partition=${PARTITION} --qos=${QUEUE} --array=1-${LENGTH} --output=${OUT_DIR}/2_bam_dedup/logs/%x.%A_%a.out --error=${OUT_DIR}/2_bam_dedup/logs/%x.%A_%a.err slurm/ReSeq_Dedup.job
                                                                                                                                                                                                         
