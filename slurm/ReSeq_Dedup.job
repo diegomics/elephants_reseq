@@ -18,7 +18,7 @@ BAM_IN=$(ls ${OUT_DIR}/1_bam_sort/*.bam | head -n $SLURM_ARRAY_TASK_ID | tail -n
 BAM_NAME=$(basename $BAM_IN .bam)
 cd "${OUT_DIR}/2_bam_dedup"
 srun \
-picard -Xmx64g MarkDuplicates REMOVE_DUPLICATES=true ASSUME_SORTED=true VALIDATION_STRINGENCY=SILENT MAX_FILE_HANDLES_FOR_READ_ENDS_MAP=1000 INPUT=$BAM_IN OUTPUT="${BAM_NAME}.rmd.bam" METRICS_FILE="${BAM_NAME}.rmd.bam.metrics" TMP_DIR=$TMPDIR
+picard -Xmx64g MarkDuplicates -REMOVE_DUPLICATES true -ASSUME_SORTED true -VALIDATION_STRINGENCY SILENT -MAX_FILE_HANDLES_FOR_READ_ENDS_MAP 1000 -INPUT $BAM_IN -OUTPUT "${BAM_NAME}.rmd.bam" -METRICS_FILE "${BAM_NAME}.rmd.bam.metrics" -TMP_DIR ${TMPDIR}
 
 echo ""
 echo ". Indexing bam..."
