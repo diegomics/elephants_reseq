@@ -31,15 +31,16 @@ echo ""
 echo ". Analyzing reference coverage..."
 echo ""
 
+echo "" >> "${OUT_DIR}/3_bam_eval/${BAM_NAME}.stats"
+echo ". Reference coverage for sample ${BAM_NAME}.rmd" >> "${OUT_DIR}/3_bam_eval/${BAM_NAME}.stats"
+echo ""
 srun \
-samtools coverage "${BAM_NAME}.rmd.bam"
+samtools coverage "${OUT_DIR}/2_bam_dedup/${BAM_NAME}.rmd.bam" >> "${OUT_DIR}/3_bam_eval/${BAM_NAME}.stats"
 
-echo ""  >> "${READ_NAME}.stats"
-echo ". Calculating mean coverage..."   >> "${READ_NAME}.stats"
-echo ""   >> "${READ_NAME}.stats"
-
-REF_LENGTH=$(samtools view -H ${BAM_NAME}.rmd.bam | awk -vFS=: '/^@SQ/ {sum+=$3} END {print sum}')
-SEQ_DEPTH=$(samtools depth ${BAM_NAME}.rmd.bam | awk '{sum+=$3} END {print sum}')
+echo "" >> "${OUT_DIR}/3_bam_eval/${BAM_NAME}.stats"
+echo "" >> "${OUT_DIR}/3_bam_eval/${BAM_NAME}.stats"
+REF_LENGTH=$(samtools view -@ 24 -H ${OUT_DIR}/2_bam_dedup/${BAM_NAME}.rmd.bam | awk -vFS=: '/^@SQ/ {sum+=$3} END {print sum}')
+SEQ_DEPTH=$(samtools depth ${OUT_DIR}/2_bam_dedup/${BAM_NAME}.rmd.bam | awk '{sum+=$3} END {print sum}')
 COVERAGE=$(echo "$SEQ_DEPTH/$REF_LENGTH" | bc -l)
-echo "The mean coverage of sample ${BAM_NAME}.rmd is ${COVERAGE}x." >> "${READ_NAME}.stats"
+echo "The mean coverage of sample ${BAM_NAME}.rmd is ${COVERAGE}x." >> "${OUT_DIR}/3_bam_eval/${BAM_NAME}.stats"
 
