@@ -17,9 +17,12 @@ cd "${OUT_DIR}/0_idx"
 
 if [[ "${ASSEMBLY##*.}" == "gz" ]]
 then
+        INTER=$(basename ${ASSEMBLY} .gz)
+        ASSEMBLY_NAME=$(basename $INTER .${INTER##*.})
         gunzip -c ${ASSEMBLY} > "${ASSEMBLY_NAME}.fa"
 elif  [[ "${ASSEMBLY##*.}" == "fa" ]] || [[ "${ASSEMBLY##*.}" == "fasta" ]]
 then
+        ASSEMBLY_NAME=$(basename $ASSEMBLY .${ASSEMBLY##*.})
         ln -s ${ASSEMBLY} "${ASSEMBLY_NAME}.fa"
 else
         echo "Invalid reference extension name!"
@@ -29,4 +32,4 @@ srun \
 bowtie2-build --threads 2 ${ASSEMBLY} ${ASSEMBLY_NAME}
 
 srun \
-samtools faidx ${ASSEMBLY}
+samtools faidx "${ASSEMBLY_NAME}.fa"
