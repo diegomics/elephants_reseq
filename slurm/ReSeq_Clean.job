@@ -1,16 +1,14 @@
 #!/bin/bash
 
-#SBATCH -J ReSeq_index
+#SBATCH -J ReSeq_clean
 
-#SBATCH --cpus-per-task=2
-#SBATCH --mem=8G
-#SBATCH --time=6:00:00
-
-export PATH="${CONDA_BIN_DIR}:${PATH}"
-source activate RESEQ_env
+#SBATCH --cpus-per-task=1
+#SBATCH --mem=1G
+#SBATCH --time=1:00:00
 
 echo ""
-echo ". Reference indexing..."
+echo ". Cleaning..."
 echo ""
 
-cd "${OUT_DIR}/0_idx"
+cd "${OUT_DIR}/1_bam_sort"
+rm *bam*
