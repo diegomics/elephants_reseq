@@ -15,6 +15,7 @@ echo ""
 
 LENGTH=$(ls ${TRIM_DIR}/*R1*.fq.gz | wc -l)
 mkdir -p "${OUT_DIR}/1_bam_sort/logs"
+mkdir -p "${OUT_DIR}/3_bam_eval"
 MAP_JOB=$(sbatch --dependency=afterok:${INDEX_JOB_ID} --mail-user=${USER_MAIL} --mail-type=${MAIL_TYPE} --partition=${PARTITION} --qos=${QUEUE} --array=1-${LENGTH} --output=${OUT_DIR}/1_bam_sort/logs/%x.%A_%a.out --error=${OUT_DIR}/1_bam_sort/logs/%x.%A_%a.err slurm/ReSeq_Map.Sort.job)
 MAP_JOB_ID=$(echo ${MAP_JOB} | cut -d ' ' -f4)
 
