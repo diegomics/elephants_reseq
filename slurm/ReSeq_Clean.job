@@ -1,1 +1,16 @@
+#!/bin/bash
 
+#SBATCH -J ReSeq_index
+
+#SBATCH --cpus-per-task=2
+#SBATCH --mem=8G
+#SBATCH --time=6:00:00
+
+export PATH="${CONDA_BIN_DIR}:${PATH}"
+source activate RESEQ_env
+
+echo ""
+echo ". Reference indexing..."
+echo ""
+
+cd "${OUT_DIR}/0_idx"
