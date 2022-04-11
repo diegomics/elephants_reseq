@@ -19,11 +19,11 @@ bash install_dependencies.sh
 ```
 ## Runnning the pipline:
 * Edit `variables.cnf` file with the respective paths, values and parameters.
-1) Run QC and filtering on Illumina NovaSeq paired-end _fastq_ files
+1) Run QC and filtering on Illumina NovaSeq paired-end _fq(.gz)_ or _fastq(.gz)_ files
 ```bash
 bash 01.ReSeq_QC.Trim.sh
 ```
-2) Index, map and deduplicate trimmed reads against a reference [.fa(.gz) or .fasta(.gz)]
+2) Index, map and deduplicate trimmed reads against a reference _.fa(.gz)_ or _.fasta(.gz)_
 ```bash
 bash 02.ReSeq_Map.Dedup.sh 
 ```
