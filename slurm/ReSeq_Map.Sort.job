@@ -24,7 +24,7 @@ ASSEMBLY_NAME=$(basename $INTER .fa)
 
 cd "${OUT_DIR}/1_bam_sort"
 srun \
-bowtie2 -p 12 -x "${OUT_DIR}/0_idx/${ASSEMBLY_NAME}" -1 ${READ} -2 "${TRIM_DIR}/${READ_NAME}_R2.trimmed.fq.gz" --no-unal --no-mixed --no-discordant --rg SM:"${READ_NAME}" 2>> "${OUT_DIR}/3_bam_eval/${READ_NAME}.stats" | samtools sort -@ 9 -o "${OUT_DIR}/1_bam_sort/${READ_NAME}.bam"
+bowtie2 -p 12 -x "${OUT_DIR}/0_idx/${ASSEMBLY_NAME}" -1 ${READ} -2 "${TRIM_DIR}/${READ_NAME}_R2.trimmed.fq.gz" --no-unal --no-mixed --no-discordant --rg-id "${READ_NAME}" --rg SM:"${READ_NAME}" 2>> "${OUT_DIR}/3_bam_eval/${READ_NAME}.stats" | samtools sort -@ 9 -o "${OUT_DIR}/1_bam_sort/${READ_NAME}.bam"
 
 echo ""
 echo ". Indexing bam..."
