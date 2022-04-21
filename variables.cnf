@@ -18,3 +18,8 @@ export QUEUE="standard"
 
 # conda-specific variables
 export CONDA_BIN_DIR="/path/to/conda/bin"
+
+
+# singularity-specific variables
+export SINGULARITY_LOAD="module load singularity"
+export BIND_DIR="/path/to/bind_dir/"
