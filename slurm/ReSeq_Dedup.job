@@ -3,7 +3,7 @@
 #SBATCH -J ReSeq_dedup
 
 #SBATCH --cpus-per-task=24
-#SBATCH --mem=64G
+#SBATCH --mem=96G
 #SBATCH --time=2-00:00:00
 
 export PATH="${CONDA_BIN_DIR}:${PATH}"
@@ -14,11 +14,12 @@ echo ""
 echo ". Starting Picard..."
 echo ""
 
-BAM_IN=$(ls ${OUT_DIR}/1_bam_sort/*.bam | head -n $SLURM_ARRAY_TASK_ID | tail -n 1)
+BAM_IN=$(cat ${OUT_DIR}/pilot_list | head -n $SLURM_ARRAY_TASK_ID | tail -n 1)
+#BAM_IN=$(ls ${OUT_DIR}/1_bam_sort/*.bam | head -n $SLURM_ARRAY_TASK_ID | tail -n 1)
 BAM_NAME=$(basename $BAM_IN .bam)
 cd "${OUT_DIR}/2_bam_dedup"
 srun \
-picard -Xmx64g MarkDuplicates -REMOVE_DUPLICATES true -ASSUME_SORTED true -VALIDATION_STRINGENCY SILENT -MAX_FILE_HANDLES_FOR_READ_ENDS_MAP 1000 -INPUT $BAM_IN -OUTPUT "${BAM_NAME}.rmd.bam" -METRICS_FILE "${BAM_NAME}.rmd.bam.metrics" -TMP_DIR ${TMPDIR}
+picard -Xmx96g MarkDuplicates -REMOVE_DUPLICATES true -ASSUME_SORTED true -VALIDATION_STRINGENCY SILENT -MAX_FILE_HANDLES_FOR_READ_ENDS_MAP 1000 -INPUT $BAM_IN -OUTPUT "${BAM_NAME}.rmd.bam" -METRICS_FILE "${BAM_NAME}.rmd.bam.metrics" -TMP_DIR ${TMPDIR}
 
 echo ""
 echo ". Indexing bam..."
@@ -31,16 +32,19 @@ echo ""
 echo ". Analyzing reference coverage..."
 echo ""
 
-echo "" >> "${OUT_DIR}/3_bam_eval/${BAM_NAME}.stats"
-echo ". Reference coverage for sample ${BAM_NAME}.rmd" >> "${OUT_DIR}/3_bam_eval/${BAM_NAME}.stats"
+READS_NUMBER=$(samtools view -c -F 260 ${OUT_DIR}/2_bam_dedup/${BAM_NAME}.rmd.bam)
+echo "Number of primary aligned reads of sample ${BAM_NAME}.rmd is $READS_NUMBER" >> "${OUT_DIR}/5_bam_eval/${BAM_NAME}.stats"
+echo ""
+
+echo "" >> "${OUT_DIR}/5_bam_eval/${BAM_NAME}.stats"
+echo ". Reference coverage for sample ${BAM_NAME}.rmd" >> "${OUT_DIR}/5_bam_eval/${BAM_NAME}.stats"
 echo ""
 srun \
-samtools coverage "${OUT_DIR}/2_bam_dedup/${BAM_NAME}.rmd.bam" >> "${OUT_DIR}/3_bam_eval/${BAM_NAME}.stats"
+samtools coverage "${OUT_DIR}/2_bam_dedup/${BAM_NAME}.rmd.bam" >> "${OUT_DIR}/5_bam_eval/${BAM_NAME}.stats"
 
-echo "" >> "${OUT_DIR}/3_bam_eval/${BAM_NAME}.stats"
-echo "" >> "${OUT_DIR}/3_bam_eval/${BAM_NAME}.stats"
+echo "" >> "${OUT_DIR}/5_bam_eval/${BAM_NAME}.stats"
+echo "" >> "${OUT_DIR}/5_bam_eval/${BAM_NAME}.stats"
 REF_LENGTH=$(samtools view -@ 24 -H ${OUT_DIR}/2_bam_dedup/${BAM_NAME}.rmd.bam | awk -vFS=: '/^@SQ/ {sum+=$3} END {print sum}')
 SEQ_DEPTH=$(samtools depth ${OUT_DIR}/2_bam_dedup/${BAM_NAME}.rmd.bam | awk '{sum+=$3} END {print sum}')
 COVERAGE=$(echo "$SEQ_DEPTH/$REF_LENGTH" | bc -l)
-echo "The mean coverage of sample ${BAM_NAME}.rmd is ${COVERAGE}x." >> "${OUT_DIR}/3_bam_eval/${BAM_NAME}.stats"
-
+echo "The mean coverage of sample ${BAM_NAME}.rmd is ${COVERAGE}x." >> "${OUT_DIR}/5_bam_eval/${BAM_NAME}.stats"
