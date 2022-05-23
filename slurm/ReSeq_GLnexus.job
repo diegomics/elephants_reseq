@@ -1,0 +1,27 @@
+#SBATCH -J ReSeq_GLnex
+
+#SBATCH --cpus-per-task=12
+#SBATCH --mem=64G
+#SBATCH --time=24:00:00
+
+${SINGULARITY_LOAD}
+export PATH="${CONDA_BIN_DIR}:${PATH}"
+source activate RESEQ_env
+
+
+BIN_VER="1.3.0"
+export TMPDIR="/scratch/ddepanis/tmp"
+
+export LC_ALL=en_US.UTF-8
+export LANG=en_US.UTF-8
+export LANGUAGE=en_US.UTF-8
+
+
+echo ""
+echo ". Starting GLnexus..."
+echo ""
+
+cd "$OUT_DIR/5_deepvar"
+#singularity run -B /scratch/ddepanis/:/scratch/ddepanis/ docker://ghcr.io/dnanexus-rnd/glnexus:v1.4.1 /usr/local/bin/glnexus_cli --config DeepVariantWGS "${OUT_DIR}"/*.g.vcf.gz | singularity run -B /scratch/ddepanis/:/scratch/ddepanis/ docker://google/deepvariant:"${BIN_VER}" bcftools view - | singularity run -B /scratch/ddepanis/:/scratch/ddepanis/ docker://google/deepvariant:"${BIN_VER}" bgzip -@ 4 -c > ${OUT_DIR}/deepvariant.cohort.vcf.gz
+
+singularity run -B ${BIND_DIR}:${BIND_DIR} docker://ghcr.io/dnanexus-rnd/glnexus:v1.4.1 /usr/local/bin/glnexus_cli --mem-gbytes 64 --threads 12 --config DeepVariantWGS "${OUT_DIR}"/5_deepvar/*.g.vcf.gz | bcftools view - | bgzip -@ 4 -c > "${OUT_DIR}/5_deepvar/deepvariant.cohort.vcf.gz"                                                                               
