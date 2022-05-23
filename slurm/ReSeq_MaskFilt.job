@@ -1,0 +1,51 @@
+#!/bin/bash
+
+#SBATCH -J ReSeq_MaskFilt
+
+#SBATCH --cpus-per-task=2
+#SBATCH --mem=4G
+#SBATCH --time=2-00:00:00
+
+export PATH="${CONDA_BIN_DIR}:${PATH}"
+source activate RESEQ_env
+
+echo ""
+echo ". Starting masked filtering..."
+echo ""
+
+BAM_IN=$(cat ${OUT_DIR}/pilot_list2 | head -n $SLURM_ARRAY_TASK_ID | tail -n 1)
+#BAM_IN=$(ls ${OUT_DIR}/2_bam_dedup/*.rmd.bam | head -n $SLURM_ARRAY_TASK_ID | tail -n 1)
+BAM_NAME=$(basename $BAM_IN .rmd.bam)
+
+cd "${OUT_DIR}/3_bam_masked"
+srun \
+bedtools intersect -a ${BAM_IN} -b ${MASKED_BED} -v > "${BAM_NAME}.masked.bam"
+
+
+echo ""
+echo ". Indexing bam..."
+echo ""
+
+srun \
+samtools index "${BAM_NAME}.masked.bam"
+
+echo ""
+echo ". Analyzing reference coverage..."
+echo ""
+
+READS_NUMBER=$(samtools view -c -F 260 ${OUT_DIR}/3_bam_masked/${BAM_NAME}.masked.bam)
+echo "Number of primary aligned reads of sample ${BAM_NAME}.masked.bam is $READS_NUMBER" >> "${OUT_DIR}/5_bam_eval/${BAM_NAME}.stats"
+echo ""
+
+echo "" >> "${OUT_DIR}/5_bam_eval/${BAM_NAME}.stats"
+echo ". Reference coverage for sample ${BAM_NAME}.masked.bam" >> "${OUT_DIR}/5_bam_eval/${BAM_NAME}.stats"
+echo ""
+srun \
+samtools coverage "${OUT_DIR}/3_bam_masked/${BAM_NAME}.masked.bam" >> "${OUT_DIR}/5_bam_eval/${BAM_NAME}.stats"
+
+echo "" >> "${OUT_DIR}/5_bam_eval/${BAM_NAME}.stats"
+echo "" >> "${OUT_DIR}/5_bam_eval/${BAM_NAME}.stats"
+REF_LENGTH=$(samtools view -@ 2 -H ${OUT_DIR}/3_bam_masked/${BAM_NAME}.masked.bam | awk -vFS=: '/^@SQ/ {sum+=$3} END {print sum}')
+SEQ_DEPTH=$(samtools depth ${OUT_DIR}/3_bam_masked/${BAM_NAME}.masked.bam | awk '{sum+=$3} END {print sum}')
+COVERAGE=$(echo "$SEQ_DEPTH/$REF_LENGTH" | bc -l)
+echo "The mean coverage of sample ${BAM_NAME}.masked.bam is ${COVERAGE}x." >> "${OUT_DIR}/5_bam_eval/${BAM_NAME}.stats"
