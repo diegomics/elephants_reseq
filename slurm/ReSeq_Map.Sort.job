@@ -16,18 +16,40 @@ echo ""
 READ=$(ls ${TRIM_DIR}/*R1*.fq.gz | head -n ${SLURM_ARRAY_TASK_ID} | tail -n 1)
 READ_NAME=$(basename ${READ} _R1.trimmed.fq.gz)
 
-echo ". Bowtie2 mapping stats for sample ${READ_NAME}" > "${OUT_DIR}/3_bam_eval/${READ_NAME}.stats"
-echo "" >> "${OUT_DIR}/3_bam_eval/${READ_NAME}.stats"
+echo ". Bowtie2 mapping stats for sample ${READ_NAME}" > "${OUT_DIR}/5_bam_eval/${READ_NAME}.stats"
+echo "" >> "${OUT_DIR}/5_bam_eval/${READ_NAME}.stats"
 
 INTER="${OUT_DIR}/0_idx/*.fa"
 ASSEMBLY_NAME=$(basename $INTER .fa)
 
 cd "${OUT_DIR}/1_bam_sort"
 srun \
-bowtie2 -p 12 -x "${OUT_DIR}/0_idx/${ASSEMBLY_NAME}" -1 ${READ} -2 "${TRIM_DIR}/${READ_NAME}_R2.trimmed.fq.gz" --no-unal --no-mixed --no-discordant --rg-id ${READ_NAME} --rg "SM:${READ_NAME}" 2>> "${OUT_DIR}/3_bam_eval/${READ_NAME}.stats" | samtools sort -@ 9 -o "${OUT_DIR}/1_bam_sort/${READ_NAME}.bam"
+bowtie2 -p 12 -x "${OUT_DIR}/0_idx/${ASSEMBLY_NAME}" -1 ${READ} -2 "${TRIM_DIR}/${READ_NAME}_R2.trimmed.fq.gz" --no-unal --no-mixed --no-discordant --rg-id ${READ_NAME} --rg "SM:${READ_NAME}" 2>> "${OUT_DIR}/3_bam_eval/${READ_NAME}.stats" | samtools sort -@ 8 -o "${OUT_DIR}/1_bam_sort/${READ_NAME}.bam"
 
 echo ""
 echo ". Indexing bam..."
 echo ""
 
-samtools index ${READ_NAME}.bam
+srun \
+samtools index "${BAM_NAME}.bam"
+
+echo ""
+echo ". Analyzing reference coverage..."
+echo ""
+
+READS_NUMBER=$(samtools view -c -F 260 ${OUT_DIR}/1_bam_sort/${READ_NAME}.bam)
+echo "Number of primary aligned reads of sample ${BAM_NAME} is $READS_NUMBER" >> "${OUT_DIR}/5_bam_eval/${BAM_NAME}.stats"
+echo ""
+
+echo "" >> "${OUT_DIR}/5_bam_eval/${BAM_NAME}.stats"
+echo ". Reference coverage for sample ${BAM_NAME}" >> "${OUT_DIR}/5_bam_eval/${BAM_NAME}.stats"
+echo ""
+srun \
+samtools coverage "${OUT_DIR}/1_bam_sort/${READ_NAME}.bam" >> "${OUT_DIR}/5_bam_eval/${BAM_NAME}.stats"
+
+echo "" >> "${OUT_DIR}/5_bam_eval/${BAM_NAME}.stats"
+echo "" >> "${OUT_DIR}/5_bam_eval/${BAM_NAME}.stats"
+REF_LENGTH=$(samtools view -@ 12 -H ${OUT_DIR}/1_bam_sort/${READ_NAME}.bam | awk -vFS=: '/^@SQ/ {sum+=$3} END {print sum}')
+SEQ_DEPTH=$(samtools depth ${OUT_DIR}/1_bam_sort/${READ_NAME}.bam | awk '{sum+=$3} END {print sum}')
+COVERAGE=$(echo "$SEQ_DEPTH/$REF_LENGTH" | bc -l)
+echo "The mean coverage of sample ${BAM_NAME} is ${COVERAGE}x." >> "${OUT_DIR}/5_bam_eval/${BAM_NAME}.stats"
