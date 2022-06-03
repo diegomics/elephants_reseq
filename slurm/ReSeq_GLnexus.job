@@ -25,3 +25,5 @@ cd "$OUT_DIR/5_deepvar"
 #singularity run -B /scratch/ddepanis/:/scratch/ddepanis/ docker://ghcr.io/dnanexus-rnd/glnexus:v1.4.1 /usr/local/bin/glnexus_cli --config DeepVariantWGS "${OUT_DIR}"/*.g.vcf.gz | singularity run -B /scratch/ddepanis/:/scratch/ddepanis/ docker://google/deepvariant:"${BIN_VER}" bcftools view - | singularity run -B /scratch/ddepanis/:/scratch/ddepanis/ docker://google/deepvariant:"${BIN_VER}" bgzip -@ 4 -c > ${OUT_DIR}/deepvariant.cohort.vcf.gz
 
 singularity run -B ${BIND_DIR}:${BIND_DIR} docker://ghcr.io/dnanexus-rnd/glnexus:v1.4.1 /usr/local/bin/glnexus_cli --mem-gbytes 64 --threads 12 --config DeepVariantWGS "${OUT_DIR}"/5_deepvar/*.g.vcf.gz | bcftools view - | bgzip -@ 4 -c > "${OUT_DIR}/5_deepvar/deepvariant.cohort.vcf.gz"                                                                               
+
+bcftools index deepvariant.cohort.vcf.gz
