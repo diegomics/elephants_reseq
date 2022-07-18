@@ -1,8 +1,10 @@
 # elephants_reseq
 :elephant: :elephant: :elephant: :elephant: :elephant: :elephant: :elephant: :elephant: :elephant: :elephant:
 
-#### Pipeline for the whole-genome resequencing analysis of ~70 [timber Asian elephants from Myanmar](https://elephant-project.science)
+#### Bash/Slurm pipeline for the whole-genome resequencing analysis of ~70 [timber Asian elephants from Myanmar](https://elephant-project.science)
 :construction: Under construction! :construction:
+ 
+:warning: the pipeline is being ported to Snakemake/Nextflow
 
 ## Requirements:
 * [Slurm](https://slurm.schedmd.com)
