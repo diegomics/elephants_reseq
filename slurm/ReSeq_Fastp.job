@@ -1,9 +1,5 @@
 #!/bin/bash
 
-## Full installation ##########################
-##conda create -n FASTP_env -c bioconda fastp
-###############################################
-
 #SBATCH -J ReSeq_fastp
 
 #SBATCH --cpus-per-task=3
