@@ -7,7 +7,7 @@
 #SBATCH --time=6:00:00
 
 export PATH="${CONDA_BIN_DIR}:${PATH}"
-source activate QC_env
+source activate RESEQ_env
 
 
 READ=$(ls ${FQ_DIR}/*R*.fq.gz | head -n $SLURM_ARRAY_TASK_ID | tail -n 1)
