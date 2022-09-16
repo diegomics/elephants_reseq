@@ -2,7 +2,7 @@
 # pipeline variables
 export BASE_DIR="~/elephants_reseq"
 export FQ_DIR="~/Elephant_project/ReSeq/genomic_data/novaseq"
-export FQ_DIR="" # valid values: illumina or hifi
+export READ_TYPE="" # valid values: illumina or hifi
 export OUT_DIR="~/Elephant_project/ReSeq/pilot"
 export ASSEMBLY="/path/to/assembly.some.extension"
 export ASSEMBLY_NAME=$(basename $ASSEMBLY .some.extension)
