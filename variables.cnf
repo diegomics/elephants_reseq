@@ -1,1 +1,29 @@
 
+# pipeline variables
+export BASE_DIR="~/elephants_reseq"
+export FQ_DIR="~/Elephant_project/ReSeq/genomic_data/novaseq"
+export FQ_DIR="" # valid values: illumina or hifi
+export OUT_DIR="~/Elephant_project/ReSeq/pilot"
+export ASSEMBLY="/path/to/assembly.some.extension"
+export ASSEMBLY_NAME=$(basename $ASSEMBLY .some.extension)
+export MASKED_BED="/path/to/3cols.bed"
+export TMPDIR="/path/to/tmp_dir"
+#
+export QC_DIR="${OUT_DIR}/QC"
+export TRIM_DIR="${OUT_DIR}/trimmed"
+
+
+# slurm-specific variables
+export USER_MAIL='user@mail.de'
+export MAIL_TYPE='END,FAIL'
+export PARTITION='begendiv,main'
+export QUEUE="standard"
+
+
+# conda-specific variables
+export CONDA_BIN_DIR="/path/to/conda/bin"
+
+
+# singularity-specific variables
+export SINGULARITY_LOAD="module load singularity"
+export BIND_DIR="/path/to/bind_dir/"
